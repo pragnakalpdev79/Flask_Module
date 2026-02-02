@@ -1,14 +1,22 @@
 import uuid
 import json
 import os
+import threading
 from flask import Flask,jsonify,request
+from contextlib import ExitStack
+import sys
+import time
+
+
 
 app =Flask(__name__)
 DB_FILE = 'users.json'
+busy = threading.Lock() 
 
 def get_data():
     if not os.path.exists(DB_FILE):
         return [] 
+
     try:
         with open(DB_FILE, 'r') as file:
             content = file.read() #reading from file
@@ -20,14 +28,30 @@ def get_data():
         print(f"Error reading DB: {e}")
         return []
     
+
+
 def save_data(users_list): #to save users totally from zero
-    try:
-        with open(DB_FILE, 'w') as file:
-            json.dump({"users": users_list}, file, indent=4)
-        return True
-    except Exception as e:
-        print(f"Error saving DB: {e}")
-        return False
+    #start the lock each time some data is written
+    animation = "|/-\\"
+    i = 0
+    while busy.locked() == True:
+        print(f"waiting for task to complete")
+        sys.stdout.write("\r" + animation[i % len(animation)])
+        sys.stdout.flush()
+        if i == len(animation)-1 :
+            i = 0
+        i += 1
+
+    with busy:
+        try:
+            with open(DB_FILE, 'w') as file:
+                json.dump({"users": users_list}, file, indent=4)
+                print("data saved")
+                time.sleep(5)
+            return True
+        except Exception as e:
+            print(f"Error saving DB: {e}")
+            return False
 
 def is_valid_uuid(val): #for uuid validation
     try:
