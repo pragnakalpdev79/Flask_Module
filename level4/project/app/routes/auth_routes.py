@@ -9,7 +9,7 @@ import os
 
 
 
-auth_bp = Blueprint("authors",__name__,url_prefix='/authors')
+auth_bp = Blueprint("authors",__name__,url_prefix='/api/v1/authors')
 author_schema = Authorschema()
 book_schema = Bookschema()
 
