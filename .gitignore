@@ -1,3 +1,4 @@
 flask_module_venv/
 info.txt
 **/__pycache__/
+**.env
