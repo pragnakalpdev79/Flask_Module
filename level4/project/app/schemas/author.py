@@ -6,6 +6,7 @@ import re
 class Authorschema(Schema):
     name = fields.Str(required=True)
     bio = fields.Str(required=True)
+    password = fields.Str(required=True)
     @validates('name','bio')
     def validate_string(self,value,**kwargs): #https://github.com/marshmallow-code/marshmallow/issues/1546 -- synatx requires kwargs to work
         if not value:

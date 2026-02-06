@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML Registration Form</title>
+    <link rel="stylesheet" href="/home/pragnakalpl39/Desktop/flask_module/registration/app/static/style.css">
+    <script>
+    document.addEventListener("DOMContentLoaded",() => {
+    const signup_form = document.getElementById("signupform");
+    signup_form.addEventListener("submit",(event)=>{
+        event.preventDefault();
+        const fname = document.getElementById("first").value;
+        const lname = document.getElementById("first").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const address = document.getElementById("address").value;
+        const hoobie1 = document.getElementById("music").value;
+        const gender = document.getElementById("gender");
+        console.log(gender.length);
+        for (i=0;i<gender.length;i++){
+            console.log("gender",gender[i].checked);
+        }
+
+        
+        
+        console.log(fname,lname,email,password,address,hoobie1);
+        fetch("http://127.0.0.1:5000/home/signup",{
+            method : "POST",
+            headers : {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "fname" : fname,
+                "lname" : lname,
+                "email" : email,
+                "password" : password,
+                "address" : address,
+                "hobbies" : hoobie1,
+
+            })
+        })
+    })
+
+})
+    </script>
+</head>
+
+<body>
+    <div class="background-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+        <div class="signup-container">
+        <h1>Sign Up </h1>
+        <form id="signupform" autocomplete="on">
+            <label for="first">First Name:</label>
+            <input type="text" id="first" name="first" maxlength="30" required />
+
+            <label for="last">Last Name:</label>
+            <input type="text" id="last" name="last" maxlength="30" required />
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required />
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password"
+                   pattern="^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])\S{8,}$" 
+                   title="Password must contain at least one number, 
+                           one alphabet, one symbol, and be at 
+                           least 8 characters long" required />
+
+            <label for="repassword">Re-type Password:</label>
+            <input type="password" id="repassword" name="repassword" required />
+
+            <label for="address">Address :</label>
+            <textarea id="address" minlength="30" required></textarea>
+
+        
+        <div class="options">
+            <div class="hobby">
+            <label for="first">hobbies:</label>
+            <span class="hobbies">
+            <input type="checkbox" id="music" name="music" value="music">
+            Music<br><br>
+            </span>
+            <span class="hobbies">
+            <input type="checkbox" id="dance" name="dance" value="dance">
+            Dance<br><br>
+            </span>
+            <span class="hobbies">
+            <input type="checkbox" id="badminton" name="badminton" value="badminton">
+            Badminton
+            </span>  
+            </div>
+            <div class="gender">
+            <label for="first">Gender:</label>
+             <span class="hobbies">
+            <input type="radio" id="gender" name="gender" value="male">
+            Male <br><br>
+            </span>
+            <span class="hobbies">
+            <input type="radio" id="gender" name="gender" value="female">
+             Female <br><br>
+            </span> 
+            </div>      
+        </div>
+            <button type="submit">
+                Submit
+            </button>
+        </form>
+    </div>
+
+</body>
+
+</html>

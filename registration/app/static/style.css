@@ -1,0 +1,144 @@
+        * {
+            font-family: 'Poppins',sans-serif;
+        }
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .background-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.2;
+        }
+        .shape:nth-child(1) {
+            background: #ff0055;
+            width: 450px;
+            height: 450px;
+            top: 10%;
+            left: 5%;
+            animation: float 15s infinite ease-in-out;
+        }
+        .shape:nth-child(4) {
+            background: #ffaa00;
+            width: 450px;
+            height: 450px;
+            top: 10%;
+            right: 5%; 
+        }
+        .shape:nth-child(2) {
+            background: #00ffaa;
+            width: 450px;
+            height: 450px;
+            bottom: 10%;
+            right: 5%;
+        }
+        .shape:nth-child(3) {
+            background: #5500ff;
+            width: 450px;
+            height: 450px;
+            bottom: 10%;
+            left: 5%;
+        }
+
+
+
+
+        .signup-container {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 400px;
+            color: #ffffff;
+            background: rgba(30, 30, 30, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.479);
+        }
+        .signup-container h1{
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 900;
+            color: #ffffff;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        textarea,
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            width: 100%;
+            margin-bottom: 15px;
+            color: #ffffff;
+            background: rgba(20, 20, 20, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 10px;
+        }
+
+        input[type="checkbox"] {
+        width: 1rem;
+        height: 1rem;
+        accent-color: rgb(154, 3, 255);
+        }
+
+
+
+
+
+        .options{
+            display: flex;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            gap: 10vw;
+            
+        }
+        .options input{
+            clear: both;
+            float: left;
+        }
+        
+        .options label{
+            font-weight: 100px;
+            display: table;
+        }
+        .hobbies{
+            margin-bottom: 5px;
+        }
+
+
+
+        button[type="submit"] {
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            background-color: #9752cf;
+            color: rgb(0, 0, 0);
+            cursor: pointer;    
+            width: 100%;
+            font-size: 16px;
+            font-weight: ;
+        }

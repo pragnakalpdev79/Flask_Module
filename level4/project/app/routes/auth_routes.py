@@ -5,6 +5,7 @@ from app.schemas.book import Bookschema
 from app.services.author_services import AuthorService
 from app.services.book_services import BookService
 from marshmallow.exceptions import ValidationError
+from flask_jwt_extended import jwt_required,get_jwt_identity
 import os
 
 
@@ -24,7 +25,8 @@ def create_author():
         #validating the json request with author schema
         author = author_schema.load(json_data)
         #then passing it to add author service
-        name,error = AuthorService.add_author(name=author['name'],bio=author['bio'])
+        #ADDING PASSWORD LOGIC HERE!!
+        name,error = AuthorService.add_author(name=author['name'],bio=author['bio'],password=author['password'])
         if error:
             return jsonify({
                 "Error" : error
@@ -62,13 +64,31 @@ def author_list(id):
 #===============================================================================
 #2.5 ENDPOINT TO DELETE THE AUTHORS
 @auth_bp.route('/<int:id>',methods=['DELETE'])
+@jwt_required()
 def delete_author(id):
-    deleted_author,error = AuthorService.delete_auth(id)
+    print("entered the endpoint!!!")
+    idi = get_jwt_identity()
+    print(type(idi))
+    deleted_author,error = AuthorService.delete_auth(id,idi)
     if error:
         return jsonify({
-            "Error" : error
+            "Error" : error,
+            "identity" : "idk"
         }),400
     else :
         return jsonify({
             "Author Deleted" : deleted_author
         }),200
+
+#===============================================================================
+#2.5 ENDPOINT TO LOGIN AUTHORS
+@auth_bp.route('/login',methods=['POST'])
+def login():
+    requested_author = request.get_json()
+    result,error = AuthorService.login_author(requested_author['name'],requested_author['password'])
+    if error:
+        return jsonify({
+            "Error" : error
+        }),401
+    
+    return result

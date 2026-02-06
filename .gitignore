@@ -3,3 +3,4 @@ info.txt
 **/__pycache__/
 .env
 level4/project/.env
+registration/env_registration

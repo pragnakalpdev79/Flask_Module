@@ -8,6 +8,7 @@ class Author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True, nullable=False) #Name must be unique
     bio = db.Column(db.String(500))
+    phash = db.Column(db.String())
     deleted = db.Column(db.Boolean(),default=False)
     created_at = db.Column(TIMESTAMP,default=datetime.datetime.now())
     deleted_at = db.Column(TIMESTAMP,default=None)

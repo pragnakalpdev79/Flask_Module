@@ -2,6 +2,7 @@ from flask import Blueprint,jsonify,request
 from app.schemas.book import Bookschema 
 from marshmallow.exceptions import ValidationError
 from app.services.book_services import BookService
+
 book_bp = Blueprint("books",__name__,url_prefix='/api/v1g/books')
 book_schema = Bookschema()
 

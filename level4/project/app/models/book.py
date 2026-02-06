@@ -10,6 +10,6 @@ class Book(db.Model):
     price = db.Column(db.Float, nullable=False)
     # Foreign Key: Links to Author table
     author_id = db.Column(db.Integer, db.ForeignKey('authors.id'))
-    deleted = deleted = db.Column(db.Boolean(),default=False)
+    deleted = db.Column(db.Boolean(),default=False)
 
     
