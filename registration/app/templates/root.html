@@ -26,16 +26,21 @@
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
+
         <div class="signup-container">
         <h1>RANDOM JOKES  </h1>
         <h4>Please login or signup to see a random dad's joke</h4>
-            <a href="http://127.0.0.1:5000/home/"><button type="submit" >
+            <a href="{{ url_for('home.login') }}"><button type="submit" >
                Log in 
             </button></a> 
             <br><br>
-            <a href="{{ url_for('signup.html') }}"><button type="submit">
+            <a href="{{ url_for('home.signup') }}"><button type="submit">
                 Sign Up
             </button></a> 
+    {% for message in get_flashed_messages() %}
+    <br>
+      <div class="alert-error" style="color: rgb(240, 223, 255);margin-top: 2rem;border: solid 2px;border-color: aliceblue; padding: 1rem;">{{ message }}</div>
+    {% endfor %}
     </div>
 
 </body>

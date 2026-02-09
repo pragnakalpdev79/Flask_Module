@@ -5,46 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HTML Registration Form</title>
-    <link rel="stylesheet" href="/home/pragnakalpl39/Desktop/flask_module/registration/app/static/style.css">
-    <script>
-    document.addEventListener("DOMContentLoaded",() => {
-    const signup_form = document.getElementById("signupform");
-    signup_form.addEventListener("submit",(event)=>{
-        event.preventDefault();
-        const fname = document.getElementById("first").value;
-        const lname = document.getElementById("first").value;
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-        const address = document.getElementById("address").value;
-        const hoobie1 = document.getElementById("music").value;
-        const gender = document.getElementById("gender");
-        console.log(gender.length);
-        for (i=0;i<gender.length;i++){
-            console.log("gender",gender[i].checked);
-        }
-
-        
-        
-        console.log(fname,lname,email,password,address,hoobie1);
-        fetch("http://127.0.0.1:5000/home/signup",{
-            method : "POST",
-            headers : {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                "fname" : fname,
-                "lname" : lname,
-                "email" : email,
-                "password" : password,
-                "address" : address,
-                "hobbies" : hoobie1,
-
-            })
-        })
-    })
-
-})
-    </script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -56,7 +17,7 @@
     </div>
         <div class="signup-container">
         <h1>Sign Up </h1>
-        <form id="signupform" autocomplete="on">
+        <form id="signupform" autocomplete="on" method="POST" action="{{url_for('home.signup')}}">
             <label for="first">First Name:</label>
             <input type="text" id="first" name="first" maxlength="30" required />
 
@@ -77,29 +38,29 @@
             <input type="password" id="repassword" name="repassword" required />
 
             <label for="address">Address :</label>
-            <textarea id="address" minlength="30" required></textarea>
+            <textarea id="address" name="address" minlength="30" required></textarea>
 
         
         <div class="options">
             <div class="hobby">
             <label for="first">hobbies:</label>
             <span class="hobbies">
-            <input type="checkbox" id="music" name="music" value="music">
+            <input type="checkbox" id="music" name="hobbies" value="music">
             Music<br><br>
             </span>
             <span class="hobbies">
-            <input type="checkbox" id="dance" name="dance" value="dance">
+            <input type="checkbox" id="dance" name="hobbies" value="dance">
             Dance<br><br>
             </span>
             <span class="hobbies">
-            <input type="checkbox" id="badminton" name="badminton" value="badminton">
+            <input type="checkbox" id="badminton" name="hobbies" value="badminton">
             Badminton
             </span>  
             </div>
             <div class="gender">
             <label for="first">Gender:</label>
              <span class="hobbies">
-            <input type="radio" id="gender" name="gender" value="male">
+            <input type="radio" id="gender" name="gender" value="male" required>
             Male <br><br>
             </span>
             <span class="hobbies">
@@ -108,12 +69,38 @@
             </span> 
             </div>      
         </div>
+        <span style="display: inline-flex;margin-bottom: 3rem;">
+        <input type="checkbox" id="t&c" name="t&c" value="t&c">  
+        <label for="tandc" style="color: rgb(223, 92, 92);">  I read and agree to terms and conditions</label>
+        </span>
             <button type="submit">
                 Submit
             </button>
         </form>
     </div>
-
+<script>
+    document.getElementById("signupform").addEventListener("submit",(e) => {
+        const hobcheked = document.querySelectorAll("input[name='hobbies']:checked").length > 0;
+        if (!hobcheked)  {
+            alert("select at least one hobbie");
+            e.preventDefault();
+            return ;
+        }
+        const pass = document.getElementById("password").value;
+        const repass = document.getElementById("repassword").value;
+        if (pass!=repass){
+            alert("Password and Re-typed Password must be same")
+            e.preventDefault();
+            return;
+        }
+        const tchecked = document.querySelectorAll("input[name='t&c']:checked").length > 0;
+        if (!tchecked )  {
+            alert("Accept the terms & Conditions");
+            e.preventDefault();
+            return ;
+        }
+    })
+</script>
 </body>
 
 </html>

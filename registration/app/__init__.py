@@ -13,6 +13,11 @@ def create_app(config_class=DevConfig):
     app.template_folder = 'templates'
     cors = CORS(app)
     app.config['CORS_HEADERS'] = 'Content-Type'
+    app.config['SECRET_KEY'] = 'df2bbac85c996454f92c0591b32c1e0e65983c5bb3c3711faae9addb32b5e279'
+    app.config['JWT_TOKEN_LOCATION'] = ['cookies']
+    app.config['JWT_ACCESS_COOKIE_PATH'] = '/api/'
+    app.config['JWT_REFRESH_COOKIE_PATH'] = '/token/refresh'    
+    app.config['JWT_COOKIE_CSRF_PROTECT'] = False
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)

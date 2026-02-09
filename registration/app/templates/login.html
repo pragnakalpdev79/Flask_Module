@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML Registration Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="background-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+        <div class="signup-container">
+        <h1>Log In </h1>
+        <form id="signupform" autocomplete="on" method="POST" action="{{url_for('home.login')}}">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required />
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password"
+                   pattern="^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])\S{8,}$" 
+                   title="Password must contain at least one number, 
+                           one alphabet, one symbol, and be at 
+                           least 8 characters long" required />    
+            <button type="submit">
+                Submit
+            </button>
+        </form>
+    {% for message in get_flashed_messages() %}
+    <br>
+        <div class="alert-error" style="color: rgb(240, 223, 255);margin-top: 2rem;border: solid 2px;border-color: aliceblue; padding: 1rem;">{{ message }}</div>
+    {% endfor %}
+    </div>
+    </div>
+
+</body>
+
+</html>

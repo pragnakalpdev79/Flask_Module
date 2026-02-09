@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML Registration Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <script type="text/javascript">
+        function preventBack() {
+            window.history.forward(); 
+        }
+        
+        setTimeout("preventBack()", 0);
+        
+        window.onunload = function () { null };
+    </script>
+</head>
+
+<body>
+    <div class="background-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+        <div class="signup-container">
+        <h1>Random Joke</h1>
+        <form id="signupform" autocomplete="on" method="POST" action="{{url_for('home.logout')}}">
+    <br>
+        <div class="alert-error" style="color: rgb(240, 223, 255);
+        border: solid 2px;
+        border-color: aliceblue; 
+        padding: 1rem;
+        margin: 10px;">
+            {{ joke }}
+         </div>
+         <div class="alert-error" style="color: rgb(240, 223, 255);
+         margin-top: 2rem;
+         border: solid 2px;
+         border-color: aliceblue; 
+         padding: 1rem;
+         margin:10px">{{ email }}</div>
+            
+            <button type="submit">
+                Log Out
+            </button>
+        </form>
+    <br>
+    </div>
+    </div>
+</body>
+
+</html>

@@ -2,6 +2,8 @@ from flask import Flask, render_template,jsonify,request,session
 
 app = Flask(__name__,template_folder='templates')
 
+
+
 messages = [{'title': 'Message One',
              'content': 'Message One Content'},
             {'title': 'Message Two',
