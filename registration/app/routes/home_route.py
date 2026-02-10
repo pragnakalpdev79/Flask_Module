@@ -1,5 +1,5 @@
 from flask import Blueprint,jsonify,request,session,render_template,redirect,url_for,flash,make_response
-from flask_jwt_extended import jwt_required,get_jwt_identity,verify_jwt_in_request, set_access_cookies,set_refresh_cookies, create_refresh_token,create_access_token
+from flask_jwt_extended import jwt_required,get_jwt_identity,verify_jwt_in_request, set_access_cookies,set_refresh_cookies, create_refresh_token,create_access_token,unset_jwt_cookies
 import os
 import csv
 import io
@@ -14,12 +14,16 @@ user_schema = UserSchema()
 
 @home_bp.route('/',methods=['GET'])
 def home():
+    if request.method=='GET':
+        loggedin = request.cookies.get('access_token_cookie')
+        if loggedin:
+            return redirect(url_for('home.dashboard'))
     return render_template('root.html')
 
 @home_bp.route('/dashboard',methods=['GET','POST'])
-@jwt_required(optional=True)
+@jwt_required()
 def dashboard():
-    os.system('clear')
+    #os.system('clear')
     print("Checking if jwt exists or not~~~~")
     print()
     #check if user is logged in or not,(if jwt token or not)
@@ -78,9 +82,10 @@ def signup():
 def login():
     if request.method=='GET':
         loggedin = request.cookies.get('access_token_cookie')
+        print(loggedin)
         if loggedin:
             return redirect(url_for('home.dashboard'))
-        os.system('clear')
+        #os.system('clear')
         print("login page loading")
         return render_template('login.html')
     #if request is post
@@ -93,18 +98,23 @@ def login():
     if error :
         flash(error)
         return redirect(url_for('home.login'))
-    os.system('clear')
+    #os.system('clear')
     print("===========================================")
     #print(name['access_token'])
     print(user.email)
-    access_token = create_access_token(identity=user.email) #creates an encoded access token
+    access_token_cookie = create_access_token(identity=user.email) #creates an encoded access token
     #refresh_token = create_refresh_token(identity=user.email)
-    print(access_token) #access_token
-    if access_token:
+    print(access_token_cookie) #access_token
+
+    if access_token_cookie:
         print("generated!!")
     resp = make_response(redirect(url_for('home.dashboard')))
-    resp.set_cookie("access_token_cookie",access_token)
+
+    #resp.set_cookie("access_token_cookie",access_token_cookie)
+    set_access_cookies(resp,access_token_cookie)
     resp.set_cookie("email",user.email)
+    resp.headers['content-type'] = 'application/json'
+    
     #set_refresh_cookies(resp,refresh_token)
     print(resp)
     return resp
@@ -114,6 +124,7 @@ def logout():
     resp = make_response(redirect(url_for('home.home')))
     resp.set_cookie('access_token_cookie', expires=0)
     resp.set_cookie('emails', expires=0)
+    unset_jwt_cookies(resp)
     return resp
 
 
