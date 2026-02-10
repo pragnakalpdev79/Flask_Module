@@ -7,6 +7,7 @@ import jwt
 import requests
 from app.services.user_service import UserService
 from app.schemas.user import UserSchema
+from flask_mail import Message
 
 
 home_bp = Blueprint("home",__name__,url_prefix='/home')
@@ -76,6 +77,7 @@ def signup():
     #['Shreehari', 'Kadia', 'shreeharikadia@gmail.com', 'Pass@123', 'Pass@123', 'male', 'music,dance,badminton\r\n']
     userr = user_schema.dump(user)
     flash("Your Acount has been created,please log in now")
+
     return redirect(url_for('home.home'))
 
 @home_bp.route('/login',methods=['GET','POST'])
@@ -114,7 +116,7 @@ def login():
     set_access_cookies(resp,access_token_cookie)
     resp.set_cookie("email",user.email)
     resp.headers['content-type'] = 'application/json'
-    
+    print(resp.headers.getlist('Set-Cookie'))
     #set_refresh_cookies(resp,refresh_token)
     print(resp)
     return resp

@@ -1,4 +1,4 @@
-from app.extensions import db
+from app.extensions import db,mail
 from sqlalchemy import update
 import os 
 import jwt
@@ -7,6 +7,7 @@ from app.models.user import User
 from flask_jwt_extended import ( create_access_token, create_refresh_token, set_access_cookies,
     set_refresh_cookies, unset_jwt_cookies)
 from datetime import datetime,timezone,timedelta
+from flask_mail import Mail, Message
 import hashlib
 import app
 
@@ -40,6 +41,9 @@ class UserService:
                         gender=gender)
         db.session.add(new_user)
         db.session.commit()
+        msg = Message('Sign up Sucessfull', sender = 'pragnakalp.dev79@gmail.com', recipients = [user_details[2]])
+        msg.body = "Your acount has been created for daily jokes,you can use your credentials to login now"
+        mail.send(msg)
         return new_user,None
 
 

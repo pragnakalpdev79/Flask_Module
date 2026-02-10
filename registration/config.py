@@ -10,6 +10,7 @@ class Config:
 class DevConfig(Config):
     SQLALCHEMY_DATABASE_URI = URI
     DEBUG = True
+    
 
 class TestConfig(Config):
     SQLALCHEMY_DATABASE_URI = URI
